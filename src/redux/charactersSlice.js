@@ -1,4 +1,7 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+
+export const fetchCharacters = createAsyncThunk("characters/getCharacters")
+
 
 export const charactersSlice = createSlice({  // export ediyorum ki, diğer dosyalarda da kullanabileyim.
     name: "character",

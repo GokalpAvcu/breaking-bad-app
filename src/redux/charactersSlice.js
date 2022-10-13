@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-export const characterSlice = createSlice({  // export ediyorum ki, diğer dosyalarda da kullanabileyim.
+export const charactersSlice = createSlice({  // export ediyorum ki, diğer dosyalarda da kullanabileyim.
     name: "character",
     initialState: {
         items: [],
@@ -8,4 +8,4 @@ export const characterSlice = createSlice({  // export ediyorum ki, diğer dosya
     reducers: {},
 });
 
-export default characterSlice.reducer; // export ediyorum ki, diğer dosyalarda da kullanabileyim.
+export default charactersSlice.reducer; // export ediyorum ki, diğer dosyalarda da kullanabileyim.

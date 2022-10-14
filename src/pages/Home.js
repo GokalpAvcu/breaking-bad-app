@@ -4,6 +4,7 @@ import "./styles.css";
 import Masonry from "react-masonry-css";
 
 import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 import { useSelector, useDispatch } from "react-redux"; // store üzerindeki bir veriye ulaşmak için useSelector kullanılır.
 import { fetchCharacters } from "../redux/charactersSlice";
@@ -23,8 +24,8 @@ function Home() {
     return <Loading/>
   }
 
-  if(error) {
-    return <div>Error: {error}</div>
+  if (error) {
+    return <Error message={error}/>
   }
 
 

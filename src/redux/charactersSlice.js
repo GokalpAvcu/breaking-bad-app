@@ -18,13 +18,22 @@ export const charactersSlice = createSlice({
   name: "characters",
   initialState: {
     items: [],
+    isLoading: false
   },
   reducers: {},
   extraReducers: {
-    [fetchCharacters.fulfilled]: (state, action) => {
-      state.items = action.payload;
-      console.log(state.items);
+    [fetchCharacters.pending]: (state,action) =>{ // pending: işlem başladığında çalışır.
+      state.isLoading = true
     },
+    [fetchCharacters.fulfilled]: (state, action) => { // fulfilled: işlem başarılı olduğunda çalışır.
+      state.items = action.payload;
+      state.isLoading = false;
+    },
+    [fetchCharacters.rejected]: (state,action) =>{ // rejected: işlem başarısız olduğunda çalışır.
+      state.isLoading = false
+      state.error = state.error.message
+    }
+
   },
 });
 

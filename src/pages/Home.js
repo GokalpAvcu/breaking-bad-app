@@ -6,16 +6,25 @@ import { fetchCharacters } from "../redux/charactersSlice";
 
 function Home() {
   const characters = useSelector((state) => state.characters.items); // store üzerindeki characters verisine ulaşmak için state.characters yazılır.
+  const isLoading = useSelector((state) => state.characters.isLoading);
+  const error = useSelector((state) => state.characters.error);
   const dispatch = useDispatch(); // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır.
 
   useEffect(() => {
     dispatch(fetchCharacters()); // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır.
   }, [dispatch]); // dispatch değiştiğinde useEffect çalışır.
+  
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if(error) {
+    return <div>Error: {error}</div>
+  }
+
 
   return (
     <div>
-      <h1>characters</h1>
-
       <Masonry
         breakpointCols={4}
         className="my-masonry-grid"

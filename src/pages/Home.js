@@ -16,8 +16,9 @@ function Home() {
       <h1>characters</h1>
 
       {characters.map(character => (
-        <div>
-         <img img={character.image} alt={character.name} />
+        <div >
+         <img alt={character.name} src={character.img} />
+         
         </div>
       ))}
     </div>

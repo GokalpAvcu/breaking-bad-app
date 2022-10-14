@@ -1,8 +1,13 @@
 import { useEffect } from "react";
+
 import "./styles.css";
 import Masonry from "react-masonry-css";
+
+import Loading from "../components/Loading";
+
 import { useSelector, useDispatch } from "react-redux"; // store üzerindeki bir veriye ulaşmak için useSelector kullanılır.
 import { fetchCharacters } from "../redux/charactersSlice";
+
 
 function Home() {
   const characters = useSelector((state) => state.characters.items); // store üzerindeki characters verisine ulaşmak için state.characters yazılır.
@@ -15,7 +20,7 @@ function Home() {
   }, [dispatch]); // dispatch değiştiğinde useEffect çalışır.
   
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading/>
   }
 
   if(error) {
@@ -33,6 +38,7 @@ function Home() {
         {characters.map((character) => ( // store üzerindeki characters verisine ulaşmak için state.characters yazılır.
           <div>
             <img alt={character.name} src={character.img} className="character" />
+            <div className="char_name">{character.name}</div>
           </div>
         ))}
       </Masonry>

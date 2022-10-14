@@ -31,7 +31,7 @@ export const charactersSlice = createSlice({
     },
     [fetchCharacters.rejected]: (state,action) =>{ // rejected: işlem başarısız olduğunda çalışır.
       state.isLoading = false
-      state.error = state.error.message
+      state.error = action.error.message
     }
 
   },

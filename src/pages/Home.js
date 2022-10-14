@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import "./styles.css";
 import Masonry from "react-masonry-css";
 import { useSelector, useDispatch } from "react-redux"; // store üzerindeki bir veriye ulaşmak için useSelector kullanılır.
 import { fetchCharacters } from "../redux/charactersSlice";
@@ -16,13 +17,13 @@ function Home() {
       <h1>characters</h1>
 
       <Masonry
-        breakpointCols={3}
+        breakpointCols={4}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {characters.map((character) => (
+        {characters.map((character) => ( // store üzerindeki characters verisine ulaşmak için state.characters yazılır.
           <div>
-            <img alt={character.name} src={character.img} />
+            <img alt={character.name} src={character.img} className="character" />
           </div>
         ))}
       </Masonry>

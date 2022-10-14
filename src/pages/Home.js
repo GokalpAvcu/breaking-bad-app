@@ -4,17 +4,22 @@ import { useSelector, useDispatch } from "react-redux"; // store üzerindeki bir
 import { fetchCharacters } from "../redux/charactersSlice";
 
 function Home() {
-  const data = useSelector((state) => state.characters); // store üzerindeki characters verisine ulaşmak için state.characters yazılır.
+  const characters = useSelector((state) => state.characters.items); // store üzerindeki characters verisine ulaşmak için state.characters yazılır.
   const dispatch = useDispatch(); // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır.
 
   useEffect(() => {
     dispatch(fetchCharacters()); // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır.
-    console.log(data);
   }, [dispatch]); // dispatch değiştiğinde useEffect çalışır.
 
   return (
     <div>
-      <h1>Home</h1>
+      <h1>characters</h1>
+
+      {characters.map(character => (
+        <div>
+         <img img={character.image} alt={character.name} />
+        </div>
+      ))}
     </div>
   );
 }

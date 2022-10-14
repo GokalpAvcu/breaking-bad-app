@@ -21,7 +21,7 @@ export const charactersSlice = createSlice({
   extraReducers: {
     [fetchCharacters.fulfilled]: (state, action) => {
       state.items = action.payload;
-      console.log(action.payload);
+      console.log(state.items);
     },
   },
 });

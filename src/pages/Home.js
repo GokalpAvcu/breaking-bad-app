@@ -12,17 +12,17 @@ import { fetchCharacters } from "../redux/charactersSlice";
 
 function Home() {
   const characters = useSelector((state) => state.characters.items); // store üzerindeki characters verisine ulaşmak için state.characters yazılır.
+  const nextPage = useSelector((state) => state.characters.page);
   const isLoading = useSelector((state) => state.characters.isLoading);
   const error = useSelector((state) => state.characters.error);
+
   const dispatch = useDispatch(); // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır.
 
   useEffect(() => {
     dispatch(fetchCharacters()); // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır.
   }, [dispatch]); // dispatch değiştiğinde useEffect çalışır.
   
-  if (isLoading) {
-    return <Loading/>
-  }
+  
 
   if (error) {
     return <Error message={error}/>
@@ -44,8 +44,9 @@ function Home() {
         ))}
       </Masonry>
      
-     <div style={{padding:15, textAlign: "center"}}>
-     <button>Load More</button>
+     <div style={{padding:"20px 0 40px 0", textAlign: "center"}}>
+      {isLoading && <Loading/>}
+     <button onClick={() => dispatch(fetchCharacters(nextPage))}>Load More ({nextPage})</button>
      </div>
 
     </div>

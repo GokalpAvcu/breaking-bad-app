@@ -26,8 +26,9 @@ export const charactersSlice = createSlice({
       state.isLoading = true
     },
     [fetchCharacters.fulfilled]: (state, action) => { // fulfilled: işlem başarılı olduğunda çalışır.
-      state.items = action.payload; 
+      state.items = [...state.items, ...action.payload];
       state.isLoading = false;
+      state.page += 1;
     },
     [fetchCharacters.rejected]: (state,action) =>{ // rejected: işlem başarısız olduğunda çalışır.
       state.isLoading = false

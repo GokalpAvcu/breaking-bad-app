@@ -43,19 +43,22 @@ function Home() {
                 src={character.img}
                 className="character"
               />
-              <div className="char_name">{character.name}</div>
+              <div className="char_name">{character.name}</div> 
             </div>
           )
         )}
       </Masonry>
 
       <div style={{ padding: "20px 0 40px 0", textAlign: "center" }}>
-        {isLoading && <Loading />}
-        {hasNextPage && !isLoading && (
-          <button onClick={() => dispatch(fetchCharacters(nextPage))}>
-            Load More ({nextPage})
+        {isLoading && <Loading />} {/* isLoading true ise Loading componentini göster. */}
+        {hasNextPage && !isLoading && ( // eğer bir sonraki sayfa varsa ve yüklenmiyor ise butonu göster.
+          <button onClick={() => dispatch(fetchCharacters(nextPage))}> {/* store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır. */}
+            Load More ({nextPage}) 
           </button>
         )}
+        {
+          !nextPage && <div>There is no character.</div> // eğer nextPage yoksa, "There is no character." yazdır.
+        }
       </div>
     </div>
   );

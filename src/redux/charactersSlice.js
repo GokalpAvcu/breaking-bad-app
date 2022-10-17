@@ -26,11 +26,11 @@ export const charactersSlice = createSlice({
   // extraReducers, createAsyncThunk fonksiyonu ile oluşturduğumuz fonksiyonları kullanabilmemizi sağlar.
   extraReducers: {
     [fetchCharacters.pending]: (state,action) => { // pending: işlem başladığında çalışır.
-      state.status = "loading";
+      state.status = "loading"; // status componentini göster.
     },
     [fetchCharacters.fulfilled]: (state, action) => { // fulfilled: işlem başarılı olduğunda çalışır.
       state.items = [...state.items, ...action.payload]; // ...state.items ile, state.items'ın içindeki tüm elemanları alıp, ...action.payload ile, action.payload'ın içindeki tüm elemanları alıp, birleştiriyorum.
-      state.isLoading = false; // işlem bittiğinde, isLoading'i false yaparak, Loading componentini göstermemeyi sağlıyorum.
+      state.status = "succeeded"; // işlem başarılı olduğu için, status componentini gösterme.
       state.page += 1;  // sayfayı bir arttırıyorum.
    
       if(action.payload.length < char_limit){ // action.payload'ın içindeki eleman sayısı, char_limit'ten küçükse, daha fazla sayfa yok demektir.
@@ -39,8 +39,8 @@ export const charactersSlice = createSlice({
 
     },
     [fetchCharacters.rejected]: (state,action) =>{ // rejected: işlem başarısız olduğunda çalışır.
-      state.isLoading = false // işlem başarısız olduğunda, isLoading'i false yaparak, Loading componentini göstermemeyi sağlıyorum.
-      state.error = action.error.message // error'u, action.error.message ile, action'un içindeki error'un mesajını alıyorum.
+      state.status = "failed"; // işlem başarısız olduğunda, isLoading'i false yaparak, Loading componentini göstermemeyi sağlıyorum.
+      state.error = action.error.message; // error'u, action.error.message ile, action'un içindeki error'un mesajını alıyorum.
     }
 
   },

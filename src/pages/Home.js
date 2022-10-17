@@ -43,6 +43,11 @@ function Home() {
           </div>
         ))}
       </Masonry>
+     
+     <div style={{padding:15, textAlign: "center"}}>
+     <button>Load More</button>
+     </div>
+
     </div>
   );
 }

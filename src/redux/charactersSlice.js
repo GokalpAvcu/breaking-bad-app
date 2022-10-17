@@ -5,7 +5,7 @@ const char_limit = 12;
 
 export const fetchCharacters = createAsyncThunk('characters/getCharacters', async (page) => {
     const response = await axios(
-      `${process.env.REACT_APP_API_BASE_ENDPOINT}/characters?limit=${char_limit}?offset=${
+      `${process.env.REACT_APP_API_BASE_ENDPOINT}/characters?limit=${char_limit}&offset=${
         page * char_limit
       }`,
     );

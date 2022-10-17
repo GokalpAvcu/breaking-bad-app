@@ -19,6 +19,7 @@ export const charactersSlice = createSlice({
     items: [],
     isLoading: false,
     page: 0, // sıfırıncı sayfadan başlıyorum.
+    hasNextPage: true,
   },
   reducers: {},
   extraReducers: {
@@ -29,6 +30,11 @@ export const charactersSlice = createSlice({
       state.items = [...state.items, ...action.payload];
       state.isLoading = false;
       state.page += 1;
+   
+      if(action.payload.length < char_limit){
+        state.hasNextPage = false;
+      }
+
     },
     [fetchCharacters.rejected]: (state,action) =>{ // rejected: işlem başarısız olduğunda çalışır.
       state.isLoading = false

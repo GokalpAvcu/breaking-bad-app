@@ -20,7 +20,7 @@ function Home() {
   const characters = useSelector((state) => state.characters.items); // store üzerindeki characters verisine ulaşmak için state.characters yazılır. useSelectors kullandım çünkü
   const nextPage = useSelector((state) => state.characters.page); // characters page değerine ulaşmak için state.characters.page yazılır.
   const hasNextPage = useSelector((state) => state.characters.hasNextPage);
-  const isLoading = useSelector((state) => state.characters.isLoading);
+  const status = useSelector((state) => state.characters.status);
   const error = useSelector((state) => state.characters.error);
 
   // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır.
@@ -30,7 +30,7 @@ function Home() {
     dispatch(fetchCharacters());  // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır. fetchCharacters fonksiyonunu çalıştırıyorum.
   }, [dispatch]);                 // dispatch değiştiğinde useEffect çalışır.
 
-  if (error) {                        // error varsa, Error componentini döndür.
+  if (status === "failed") {           // status değeri failed ise Error componentini döndür.
     return <Error message={error} />; // Error componentine message propu olarak error değerini gönderiyorum.
   }
 
@@ -58,8 +58,8 @@ function Home() {
       </Masonry>
 
       <div style={{ padding: "20px 0 40px 0", textAlign: "center" }}>
-        {isLoading ?? <Loading />} {/* isLoading true ise Loading componentini göster. */}
-        {hasNextPage ?? !isLoading ?? ( // eğer bir sonraki sayfa varsa ve yüklenmiyor ise butonu göster.
+        {status === "loading" ?? <Loading />} {/* status değeri loading ise Loading componentini döndür. */}
+        {hasNextPage ?? status !== "loading" ?? ( // hasNextPage true ise ve status loading değil ise, aşağıdaki kodları çalıştır.
           <button onClick={() => dispatch(fetchCharacters(nextPage))}> {/* store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır. */}
             Load More ({nextPage}) 
           </button>

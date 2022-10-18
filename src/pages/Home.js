@@ -1,6 +1,4 @@
-import {
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useEffect } from "react";
 
@@ -21,37 +19,47 @@ function Home() {
   const status = useSelector((state) => state.characters.status);
   const error = useSelector((state) => state.characters.error);
 
+  console.log(hasNextPage);
+
   // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır.
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
-  useEffect(() => {               // useEffect kullandım çünkü, sayfa ilk açıldığında, sayfa sonuna gelindiğinde, sayfa yenilendiğinde çalışmasını istiyorum.
-    if(status === "idle") {       // status değeri "idle" ise, yani sayfa ilk açıldığında çalışmasını istiyorum.
-     dispatch(fetchCharacters()); // ilk açıldığında, sayfa yenilendiğinde çalışmasını istiyorum.
-    }     
-    dispatch(fetchCharacters());  // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır. fetchCharacters fonksiyonunu çalıştırıyorum.
-  }, [dispatch, status]);                 // dispatch değiştiğinde useEffect çalışır.
+  useEffect(() => {
+    // useEffect kullandım çünkü, sayfa ilk açıldığında, sayfa sonuna gelindiğinde, sayfa yenilendiğinde çalışmasını istiyorum.
+    if (status === "idle") {
+      // status değeri "idle" ise, yani sayfa ilk açıldığında çalışmasını istiyorum.
+      dispatch(fetchCharacters()); // ilk açıldığında, sayfa yenilendiğinde çalışmasını istiyorum.
+    }
+  }, [dispatch, status]); // dispatch değiştiğinde useEffect çalışır.
 
-  if (status === "failed") {          // status değeri failed ise Error componentini döndür.
+  if (status === "failed") {
+    // status değeri failed ise Error componentini döndür.
     return <Error message={error} />; // Error componentine message propu olarak error değerini gönderiyorum.
   }
 
-  return ( // return içindeki kodlar, Home componentini döndürür.
+  return (
+    // return içindeki kodlar, Home componentini döndürür.
     <div>
       <Masonry // Masonry componenti, karakterlerin sıralanmasını sağlar.
         breakpointCols={4}
-        className="my-masonry-grid" 
+        className="my-masonry-grid"
         columnClassName="my-masonry-grid_column" // Masonry componentini kullanarak, karakterlerin görünümünü ayarlıyorum.
       >
-        
-        {characters.map((character) => ( // characters verisini map fonksiyonu ile dönüyorum. store üzerindeki characters verisine ulaşmak için state.characters yazılır.
-            <div key={character.char_id}> {/* key propu, React'in her bir elemanı tekil olarak tanımasını sağlar. */}
-              <Link to="/char/2">
-              <img
-                alt={character.name} // karakterin ismini alt propuna yazıyorum.
-                src={character.img}  // karakterin resmini src propuna yazıyorum.
-                className="character"
-              />
-              <div className="char_name">{character.name}</div>  {/* karakterin ismini yazdırıyorum. */}
+        {characters.map(
+          (
+            character // characters verisini map fonksiyonu ile dönüyorum. store üzerindeki characters verisine ulaşmak için state.characters yazılır.
+          ) => (
+            <div key={character.char_id}>
+              {" "}
+              {/* key propu, React'in her bir elemanı tekil olarak tanımasını sağlar. */}
+              <Link to={`/char/${character.char_id}`}>
+                <img
+                  alt={character.name} // karakterin ismini alt propuna yazıyorum.
+                  src={character.img} // karakterin resmini src propuna yazıyorum.
+                  className="character"
+                />
+                <div className="char_name">{character.name}</div>{" "}
+                {/* karakterin ismini yazdırıyorum. */}
               </Link>
             </div>
           )
@@ -59,17 +67,22 @@ function Home() {
       </Masonry>
 
       <div style={{ padding: "20px 0 40px 0", textAlign: "center" }}>
-        {status === "loading" ?? <Loading />} {/* status değeri loading ise Loading componentini döndür. */}
-        {hasNextPage ?? status !== "loading" ?? ( // hasNextPage true ise ve status loading değil ise, aşağıdaki kodları çalıştır.
-          <button onClick={() => dispatch(fetchCharacters(nextPage))}> {/* store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır. */}
-            Load More ({nextPage}) 
-          </button>
-        )}
+        {status === "loading" ?? <Loading />}{" "}
+        {/* status değeri loading ise Loading componentini döndür. */}
+        {hasNextPage &&
+          (status !== "loading" ?? ( // hasNextPage true ise ve status loading değil ise, aşağıdaki kodları çalıştır.
+            <button onClick={() => dispatch(fetchCharacters(nextPage))}>
+              {" "}
+              {/* store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır. */}
+              Load More {{ nextPage }}
+            </button>
+          ))}
         {
-          !nextPage ?? <div>There is no character.</div> // eğer nextPage yoksa, "There is no character." yazdır.
+          !hasNextPage ?? <div>There is no character.</div> // eğer nextPage yoksa, "There is no character." yazdır.
         }
-      </div> 
-    </div> 
+      </div>
+    </div>
   );
 }
 export default Home;
+

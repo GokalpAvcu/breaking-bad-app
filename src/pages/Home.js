@@ -2,8 +2,6 @@ import {
   Link
 } from "react-router-dom";
 
-
-
 import { useEffect } from "react";
 
 import "./styles.css";
@@ -27,10 +25,13 @@ function Home() {
   const dispatch = useDispatch(); 
 
   useEffect(() => {               // useEffect kullandım çünkü, sayfa ilk açıldığında, sayfa sonuna gelindiğinde, sayfa yenilendiğinde çalışmasını istiyorum.
+    if(status === "idle") {       // status değeri "idle" ise, yani sayfa ilk açıldığında çalışmasını istiyorum.
+     dispatch(fetchCharacters()); // ilk açıldığında, sayfa yenilendiğinde çalışmasını istiyorum.
+    }     
     dispatch(fetchCharacters());  // store üzerindeki bir veriyi değiştirmek için useDispatch kullanılır. fetchCharacters fonksiyonunu çalıştırıyorum.
-  }, [dispatch]);                 // dispatch değiştiğinde useEffect çalışır.
+  }, [dispatch, status]);                 // dispatch değiştiğinde useEffect çalışır.
 
-  if (status === "failed") {           // status değeri failed ise Error componentini döndür.
+  if (status === "failed") {          // status değeri failed ise Error componentini döndür.
     return <Error message={error} />; // Error componentine message propu olarak error değerini gönderiyorum.
   }
 

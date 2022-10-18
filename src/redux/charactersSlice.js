@@ -17,10 +17,10 @@ export const charactersSlice = createSlice({
   // export ediyorum ki, diğer dosyalarda da kullanabileyim.
   name: "characters",
   initialState: {
-    items: [],
-    status: "idle", // status false ise, status componentini gösterme.
+    items: [], // items isimli bir array tanımladım.
+    status: "idle", // status: "idle" demek, veriler henüz yüklenmedi demektir.
     page: 0, // sıfırıncı sayfadan başlıyorum.
-    hasNextPage: true, 
+    hasNextPage: true, // hasnextpage: true demek, bir sonraki sayfa var demektir.
   },
   reducers: {}, 
   // extraReducers, createAsyncThunk fonksiyonu ile oluşturduğumuz fonksiyonları kullanabilmemizi sağlar.

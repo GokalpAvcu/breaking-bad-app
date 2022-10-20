@@ -10,6 +10,8 @@ function Detail() {
 
   useEffect(() => {
   axios(`$(process.env.REACT_APP_API_URL)/characters/${char_id}`)
+  .then((res) => res.data)
+  .then((data) => setChar(data));
   },[char_id])
 
     return (

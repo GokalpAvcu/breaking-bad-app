@@ -10,7 +10,7 @@ function Detail() {
 
   useEffect(() => {
   axios(`$(process.env.REACT_APP_API_URL)/characters/${char_id}`)
-  },[])
+  },[char_id])
 
     return (
       <div>
